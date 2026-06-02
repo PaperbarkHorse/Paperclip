@@ -16,8 +16,8 @@ class UIModsItemPatch
 
             __instance.SubscribedOwnedModIcon.SetActive(false);
             __instance.SubscribedModIcon.SetActive(false);
-            __instance.ButtonRenameMod.SetActive(false);
-            __instance.ButtonSetPreviewImage.SetActive(false);
+            // __instance.ButtonRenameMod.SetActive(false);
+            // __instance.ButtonSetPreviewImage.SetActive(false);
             __instance.ToggleIsModBeingEdited.gameObject.SetActive(false);
             __instance.UploadUpdateButtonObject.SetActive(false);
             __instance.ButtonWorkshopVisibility.SetActive(false);

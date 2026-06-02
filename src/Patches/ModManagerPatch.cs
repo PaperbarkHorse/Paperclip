@@ -53,4 +53,20 @@ class ModManagerPatch
         Paperclip.Logger.LogInfo("Bundled asset mod loading finished");
     }
 
+    [HarmonyPatch("SetIsModEnabled")]
+    [HarmonyPrefix]
+    private static bool SetIsModEnabledPatch(ModManager __instance, ulong guid, bool isEnabled)
+    {
+        AssetMod assetMod = (AssetMod)AssetManager.Instance.GetAsset(guid);
+        if (!assetMod.IsMainMod && assetMod.Enabled != isEnabled)
+        {
+            assetMod.Enabled = isEnabled;
+            AssetManager.Instance.WriteMetaFile(assetMod);
+        }
+
+        PaperclipModManager.ModRefreshDirty = true;
+
+        return false;
+    }
+
 }

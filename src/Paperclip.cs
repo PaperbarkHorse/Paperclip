@@ -25,7 +25,9 @@ public class Paperclip : BaseUnityPlugin
         harmony.PatchAll(typeof(AssetModPatch));
         harmony.PatchAll(typeof(ModManagerPatch));
         harmony.PatchAll(typeof(SettingsPatch));
+        harmony.PatchAll(typeof(UIMainMenuPatch));
         harmony.PatchAll(typeof(UIModsItemPatch));
+        harmony.PatchAll(typeof(UIModsPatch));
 
         Logger.LogInfo($"Paperclip {VERSION} is loaded. Happy modding! /)");
     }
