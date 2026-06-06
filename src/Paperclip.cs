@@ -22,6 +22,7 @@ public class Paperclip : BaseUnityPlugin
 
     private void Awake()
     {
+        harmony.PatchAll(typeof(AssetManagerPatch));
         harmony.PatchAll(typeof(AssetModPatch));
         harmony.PatchAll(typeof(ModManagerPatch));
         harmony.PatchAll(typeof(SettingsPatch));

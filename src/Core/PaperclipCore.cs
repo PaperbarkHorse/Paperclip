@@ -1,23 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace Paperclip.Core;
 
-public class PaperclipModManager
+public class PaperclipCore
 {
 
-    public static Dictionary<ulong, PaperclipModMetadata> Mods = new Dictionary<ulong, PaperclipModMetadata>();
-    public static bool ModRefreshDirty { get; set; } = false;
+    public static Dictionary<ulong, ModMetadata> Mods = new Dictionary<ulong, ModMetadata>();
+    public static Dictionary<ulong, ulong> AssetsBelongingToMods = new Dictionary<ulong, ulong>();
 
-    public static void ClearAllModMetadata()
-    {
-        Mods.Clear();
-    }
+    public static List<ulong> CurrentAssetLoading = new List<ulong>();
 
-    public static PaperclipModMetadata GetOrCreateModMetadata(ulong modGUID)
+    public static ModMetadata GetModMetadata(ulong modGUID)
     {
-        PaperclipModMetadata Metadata;
+        ModMetadata Metadata;
 
         if (Mods.TryGetValue(modGUID, out Metadata))
         {
@@ -25,7 +23,7 @@ public class PaperclipModManager
         }
         else
         {
-            Metadata = new PaperclipModMetadata();
+            Metadata = new ModMetadata();
             Metadata.ModGUID = modGUID;
             Mods.Add(modGUID, Metadata);
             return Metadata;
@@ -42,7 +40,7 @@ public class PaperclipModManager
         return HasModMetadata(modGUID) && Mods[modGUID].BundledByScriptMod;
     }
 
-    public static void RequestGameRefreshMods()
+    public static void RefreshMods()
     {
         Type modManagerType = typeof(ModManager);
 
@@ -51,8 +49,18 @@ public class PaperclipModManager
 
         modManagerType.GetField("_showLoadingScreen", BindingFlags.NonPublic | BindingFlags.Instance)
                 .SetValue(ModManager.Instance, true);
+    }
 
-        ModRefreshDirty = false;
+    public static Option<ulong> GetModGUIDForAsset(ulong assetGUID)
+    {
+        if (AssetsBelongingToMods.ContainsKey(assetGUID))
+        {
+            return Option<ulong>.Some(AssetsBelongingToMods[assetGUID]);
+        }
+        else
+        {
+            return Option<ulong>.None;
+        }
     }
 
 }

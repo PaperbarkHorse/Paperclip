@@ -38,7 +38,7 @@ class UIModsPatch
 
     private static void OnRefreshModsButtonClick()
     {
-        PaperclipModManager.RequestGameRefreshMods();
+        PaperclipCore.RefreshMods();
     }
 
 }

@@ -1,5 +1,6 @@
 using HarmonyLib;
 using Paperclip.Core;
+using Steamworks.Data;
 
 namespace Paperclip.Patches;
 
@@ -11,7 +12,7 @@ class UIModsItemPatch
     [HarmonyPostfix]
     private static void InitPatch(UIModsItem __instance, ulong modGUID)
     {
-        if (PaperclipModManager.IsModBundled(modGUID))
+        if (PaperclipCore.IsModBundled(modGUID))
         {
 
             __instance.SubscribedOwnedModIcon.SetActive(false);
@@ -28,12 +29,19 @@ class UIModsItemPatch
         }
     }
 
+    [HarmonyPatch("Update")]
+    [HarmonyPostfix]
+    private static void UpdatePatch(UIModsItem __instance)
+    {
+        __instance.PanelModDisabledWhenEditingOtherMod.SetActive(false);
+    }
+
     [HarmonyPatch("RefreshModName")]
     [HarmonyPostfix]
     private static void RefreshModNamePatch(UIModsItem __instance, ulong ____modGUID)
     {
         var modGUID = ____modGUID;
-        if (PaperclipModManager.IsModBundled(modGUID))
+        if (PaperclipCore.IsModBundled(modGUID))
         {
             // BUG: Game doesn't read the translation key from the mod properly, this seems to be
             //      a base game bug that'll need patching :'3
