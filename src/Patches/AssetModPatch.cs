@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using HarmonyLib;
-using Paperclip.Core;
+using Paperclip;
 
 namespace Paperclip.Patches;
 
@@ -18,8 +18,11 @@ class AssetModPatch
 
         ModMetadata metadata = Paperclip.GetModMetadata(__instance.GUID);
 
-        textWriter.WriteLine("PaperclipRequiredDependencies:{0}", PaperclipUtils.SerializeGUIDList(metadata.RequiredDependencyGUIDs));
-        textWriter.WriteLine("PaperclipOptionalDependencies:{0}", PaperclipUtils.SerializeGUIDList(metadata.OptionalDependencyGUIDs));
+        if (metadata.PaperclipVersion > 0)
+        {
+            textWriter.WriteLine("PaperclipVersion:{0}", metadata.PaperclipVersion);
+            textWriter.WriteLine("PaperclipDependencies:{0}", PaperclipUtils.SerializeGUIDList(metadata.DependencyGUIDs));
+        }
 
         PaperclipPlugin.Logger.LogDebug($"WriteMetaFileData - Complete {__instance.GUID}");
     }
@@ -33,11 +36,11 @@ class AssetModPatch
 
         switch (key)
         {
-            case "PaperclipRequiredDependencies":
-                metadata.RequiredDependencyGUIDs = PaperclipUtils.DeserializeGUIDList(value);
+            case "PaperclipVersion":
+                metadata.PaperclipVersion = int.Parse(value);
                 break;
-            case "PaperclipOptionalDependencies":
-                metadata.OptionalDependencyGUIDs = PaperclipUtils.DeserializeGUIDList(value);
+            case "PaperclipDependencies":
+                metadata.DependencyGUIDs = PaperclipUtils.DeserializeGUIDList(value);
                 break;
         }
     }

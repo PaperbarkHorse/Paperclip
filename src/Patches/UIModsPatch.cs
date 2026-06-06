@@ -1,5 +1,5 @@
 using HarmonyLib;
-using Paperclip.Core;
+using Paperclip;
 using UnityEngine;
 using UnityEngine.Events;
 

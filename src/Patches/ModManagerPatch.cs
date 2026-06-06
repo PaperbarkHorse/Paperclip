@@ -1,6 +1,6 @@
 using System.IO;
 using HarmonyLib;
-using Paperclip.Core;
+using Paperclip;
 using Setting;
 using UnityEngine;
 

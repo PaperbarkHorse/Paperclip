@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
-using Paperclip.Core;
+using Paperclip;
 
 namespace Paperclip.Patches;
 
@@ -80,19 +80,12 @@ class AssetManagerPatch
             AssetSetting assetSetting = asset.Value as AssetSetting;
             if (assetSetting.IsSettingType && !(assetSetting.SettingType != type))
             {
-                if (assetSetting.ParentPackageAssetGUID == ModManager.MainModGUID)
-                {
-                    list.Insert(0, assetSetting);
-                }
-                else
-                {
-                    list.Add(assetSetting);
-                }
+                list.Add(assetSetting);
             }
         }
 
         List<AssetSetting> loadFirst = new List<AssetSetting>();
-        List<AssetSetting> loadNormalMods = new List<AssetSetting>();
+        List<AssetSetting> loadMods = new List<AssetSetting>();
         List<AssetSetting> loadPaperclipMods = new List<AssetSetting>();
         List<AssetSetting> loadLast = new List<AssetSetting>();
 
@@ -120,7 +113,7 @@ class AssetManagerPatch
                     else
                     {
                         PaperclipPlugin.Logger.LogDebug($"NORMAL - {setting.FilePath}");
-                        loadNormalMods.Add(setting);
+                        loadMods.Add(setting);
                     }
                 }
             }
@@ -132,7 +125,7 @@ class AssetManagerPatch
         }
 
         List<AssetSetting> loadOrder = loadFirst
-                .Concat(loadNormalMods)
+                .Concat(loadMods)
                 .Concat(loadPaperclipMods)
                 .Concat(loadLast)
                 .ToList();

@@ -1,6 +1,5 @@
 using HarmonyLib;
-using Paperclip.Core;
-using Steamworks.Data;
+using Paperclip;
 
 namespace Paperclip.Patches;
 

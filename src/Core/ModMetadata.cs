@@ -6,13 +6,13 @@ public class ModMetadata
 {
 
     public ulong ModGUID;
+    public int PaperclipVersion;
     public bool BundledByScriptMod = false;
-    public List<ulong> RequiredDependencyGUIDs = new List<ulong>();
-    public List<ulong> OptionalDependencyGUIDs = new List<ulong>();
+    public List<ulong> DependencyGUIDs = new List<ulong>();
 
     public bool IsPaperclipMod()
     {
-        return BundledByScriptMod || RequiredDependencyGUIDs.Count > 0 || OptionalDependencyGUIDs.Count > 0;
+        return PaperclipVersion > 0 || BundledByScriptMod || DependencyGUIDs.Count > 0;
     }
 
 }
