@@ -36,7 +36,7 @@ class ModManagerPatch
             return false;
         }
 
-        Paperclip.Logger.LogInfo("Refreshing currently loaded mods");
+        PaperclipPlugin.Logger.LogInfo("Refreshing currently loaded mods");
         ____isEnabledModDirty = false;
 
         bool flag = false;
@@ -50,7 +50,7 @@ class ModManagerPatch
                 float realtimeSinceStartup = Time.realtimeSinceStartup;
                 AssetManager.FullAssetLoadingProfiler?.Start("LoadAssetPackageRecursive", "RefreshCurrentlyLoadedMods", 278, "C:\\Users\\poik0\\Documents\\paralives\\paralives\\Assets\\Scripts\\Mods\\ModManager.cs");
                 AssetManager.MetacacheStatus metacacheStatus = AssetManager.Instance.LoadAssetPackage(num);
-                Paperclip.Logger.LogInfo(string.Format("Loaded asset database{0}of mod {1} in {2} seconds.", metacacheStatus switch
+                PaperclipPlugin.Logger.LogInfo(string.Format("Loaded asset database{0}of mod {1} in {2} seconds.", metacacheStatus switch
                 {
                     AssetManager.MetacacheStatus.ForceUseGlobalCache => " (From global metacache) ",
                     AssetManager.MetacacheStatus.RebuildCacheIfOld => " ",
@@ -93,7 +93,7 @@ class ModManagerPatch
 
     private static void LoadBundledAssetMods(ModManager modManager)
     {
-        Paperclip.Logger.LogInfo("Loading asset mods bundled with script mods:");
+        PaperclipPlugin.Logger.LogInfo("Loading asset mods bundled with script mods:");
 
         string installPath = Directory.GetParent(modManager.MainModPath).FullName;
         string pluginsPath = Path.Combine(installPath, "BepInEx/plugins");
@@ -111,15 +111,15 @@ class ModManagerPatch
                 AssetMod assetMod = modManager.LoadExistingMod(modPath);
                 modManager.SetIsModEnabled(assetMod.GUID, true);
 
-                ModMetadata metadata = PaperclipCore.GetModMetadata(assetMod.GUID);
+                ModMetadata metadata = Paperclip.GetModMetadata(assetMod.GUID);
                 metadata.BundledByScriptMod = true;
 
-                Paperclip.Logger.LogInfo($" - Loaded {assetMod.ModName} (GUID {assetMod.GUID})");
+                PaperclipPlugin.Logger.LogInfo($" - Loaded {assetMod.ModName} (GUID {assetMod.GUID})");
             }
 
         }
 
-        Paperclip.Logger.LogInfo("Bundled asset mod loading finished");
+        PaperclipPlugin.Logger.LogInfo("Bundled asset mod loading finished");
     }
 
     [HarmonyPatch("SetIsModEnabled")]

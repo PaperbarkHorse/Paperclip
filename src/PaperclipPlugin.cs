@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
 using Paperclip.Patches;
@@ -9,7 +7,7 @@ using Setting;
 namespace Paperclip;
 
 [BepInPlugin(GUID, NAME, VERSION)]
-public class Paperclip : BaseUnityPlugin
+public class PaperclipPlugin : BaseUnityPlugin
 {
     public const string GUID = "horse.paperbark.paperclip";
     public const string NAME = "Paperclip";

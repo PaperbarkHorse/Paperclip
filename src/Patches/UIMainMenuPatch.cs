@@ -28,7 +28,7 @@ class UIMainMenuPatch
         }
 
         TranslatedText translatedText = gameObject.GetComponentInChildren<TranslatedText>();
-        translatedText.SetParameters(Paperclip.VERSION);
+        translatedText.SetParameters(PaperclipPlugin.VERSION);
         translatedText.Key = "Paperclip_Version_Label";
     }
 

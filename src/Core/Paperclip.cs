@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Linq;
 
-namespace Paperclip.Core;
+namespace Paperclip;
 
-public class PaperclipCore
+public class Paperclip
 {
 
     public static Dictionary<ulong, ModMetadata> Mods = new Dictionary<ulong, ModMetadata>();

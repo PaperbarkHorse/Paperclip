@@ -28,7 +28,7 @@ class SettingsPatch
             List<Type> settingTypesToAdd = new List<Type>();
             Assembly[] assemblies = [
                 Assembly.GetAssembly(typeof(SettingBase)),
-                Assembly.GetAssembly(typeof(Paperclip)),
+                Assembly.GetAssembly(typeof(PaperclipPlugin)),
             ];
 
             foreach (Assembly assembly in assemblies)

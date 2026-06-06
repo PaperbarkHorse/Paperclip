@@ -12,7 +12,7 @@ class UIModsItemPatch
     [HarmonyPostfix]
     private static void InitPatch(UIModsItem __instance, ulong modGUID)
     {
-        if (PaperclipCore.IsModBundled(modGUID))
+        if (Paperclip.IsModBundled(modGUID))
         {
 
             __instance.SubscribedOwnedModIcon.SetActive(false);
@@ -41,7 +41,7 @@ class UIModsItemPatch
     private static void RefreshModNamePatch(UIModsItem __instance, ulong ____modGUID)
     {
         var modGUID = ____modGUID;
-        if (PaperclipCore.IsModBundled(modGUID))
+        if (Paperclip.IsModBundled(modGUID))
         {
             // BUG: Game doesn't read the translation key from the mod properly, this seems to be
             //      a base game bug that'll need patching :'3

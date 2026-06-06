@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Paperclip.Core;
+namespace Paperclip;
 
 public class ModMetadata
 {

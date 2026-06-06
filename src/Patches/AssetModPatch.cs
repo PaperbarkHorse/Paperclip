@@ -14,14 +14,14 @@ class AssetModPatch
     [HarmonyPostfix]
     private static void WriteMetaFileDataPatch(AssetMod __instance, TextWriter textWriter)
     {
-        if (!PaperclipCore.HasModMetadata(__instance.GUID)) return;
+        if (!Paperclip.HasModMetadata(__instance.GUID)) return;
 
-        ModMetadata metadata = PaperclipCore.GetModMetadata(__instance.GUID);
+        ModMetadata metadata = Paperclip.GetModMetadata(__instance.GUID);
 
         textWriter.WriteLine("PaperclipRequiredDependencies:{0}", PaperclipUtils.SerializeGUIDList(metadata.RequiredDependencyGUIDs));
         textWriter.WriteLine("PaperclipOptionalDependencies:{0}", PaperclipUtils.SerializeGUIDList(metadata.OptionalDependencyGUIDs));
 
-        Paperclip.Logger.LogDebug($"WriteMetaFileData - Complete {__instance.GUID}");
+        PaperclipPlugin.Logger.LogDebug($"WriteMetaFileData - Complete {__instance.GUID}");
     }
 
     [HarmonyPatch(nameof(AssetMod.ReadMetaFileLine))]
@@ -29,7 +29,7 @@ class AssetModPatch
     private static void ReadMetaFileLinePatch(AssetMod __instance, string key, string value)
     {
         if (key != null && !key.StartsWith("Paperclip")) return;
-        ModMetadata metadata = PaperclipCore.GetModMetadata(__instance.GUID);
+        ModMetadata metadata = Paperclip.GetModMetadata(__instance.GUID);
 
         switch (key)
         {
