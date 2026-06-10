@@ -124,14 +124,21 @@ class ModManagerPatch
 
     [HarmonyPatch("SetIsModEnabled")]
     [HarmonyPrefix]
-    private static bool SetIsModEnabledPatch(ModManager __instance, ulong guid, bool isEnabled)
+    private static bool SetIsModEnabledPatch(ModManager __instance, ulong guid, bool isEnabled, ref bool ____isEnabledModDirty, ref bool ____showLoadingScreen)
     {
         AssetMod assetMod = (AssetMod)AssetManager.Instance.GetAsset(guid);
         if (!assetMod.IsMainMod && assetMod.Enabled != isEnabled)
         {
             assetMod.Enabled = isEnabled;
             AssetManager.Instance.WriteMetaFile(assetMod);
+
+            if (!PaperclipPlugin.Config.EnableModManager.Value)
+            {
+                ____isEnabledModDirty = true;
+                ____showLoadingScreen = true;
+            }
         }
+
 
         return false;
     }

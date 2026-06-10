@@ -34,6 +34,15 @@ class UIModsPatch
             gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-240, 295);
             gameObject.GetComponentInChildren<TranslatedText>().Key = "Paperclip_UIMods_RefreshMods";
         }
+
+        if (PaperclipPlugin.Config.EnableModManager.Value)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private static void OnRefreshModsButtonClick()

@@ -2,7 +2,6 @@
 using BepInEx.Logging;
 using HarmonyLib;
 using Paperclip.Patches;
-using Setting;
 
 namespace Paperclip;
 
@@ -16,8 +15,12 @@ public class PaperclipPlugin : BaseUnityPlugin
     internal static new ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(NAME);
     private static Harmony harmony = new Harmony(GUID);
 
+    internal static new PaperclipConfig Config { get; private set; } = null!;
+
     private void Awake()
     {
+        Config = new PaperclipConfig(base.Config);
+
         harmony.PatchAll(typeof(AssetManagerPatch));
         harmony.PatchAll(typeof(AssetModPatch));
         harmony.PatchAll(typeof(AssetSettingPatch));

@@ -13,7 +13,6 @@ class UIModsItemPatch
     {
         if (PaperclipCore.IsModBundled(modGUID))
         {
-
             __instance.SubscribedOwnedModIcon.SetActive(false);
             __instance.SubscribedModIcon.SetActive(false);
             // __instance.ButtonRenameMod.SetActive(false);
