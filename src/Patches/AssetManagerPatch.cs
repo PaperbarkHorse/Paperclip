@@ -15,17 +15,13 @@ class AssetManagerPatch
     private static void LoadAssetPackagePrePatch(ulong assetGUID)
     {
         Paperclip.CurrentAssetLoading.Add(assetGUID);
-        PaperclipPlugin.Logger.LogDebug($"ENTERING MOD {assetGUID}");
     }
 
     [HarmonyPatch("LoadAssetPackage")]
     [HarmonyPostfix]
     private static void LoadAssetPackagePostPatch(ulong assetGUID)
     {
-        ulong topAssetGUID = Paperclip.CurrentAssetLoading.Last();
         Paperclip.CurrentAssetLoading.RemoveAt(Paperclip.CurrentAssetLoading.Count - 1);
-
-        PaperclipPlugin.Logger.LogDebug($"LEAVING MOD {topAssetGUID}");
     }
 
     [HarmonyPatch("RegisterAsset")]
@@ -40,7 +36,6 @@ class AssetManagerPatch
             return;
         }
 
-        PaperclipPlugin.Logger.LogDebug($"Asset {__result.GUID} associated with mod {Paperclip.CurrentAssetLoading[0]}");
         Paperclip.AssetsBelongingToMods[__result.GUID] = Paperclip.CurrentAssetLoading[0];
     }
 
@@ -56,7 +51,6 @@ class AssetManagerPatch
             return;
         }
 
-        PaperclipPlugin.Logger.LogDebug($"Asset (from metadata) {__result.GUID} associated with mod {Paperclip.CurrentAssetLoading[0]}");
         Paperclip.AssetsBelongingToMods[__result.GUID] = Paperclip.CurrentAssetLoading[0];
     }
 
@@ -69,7 +63,6 @@ class AssetManagerPatch
         Type type
     )
     {
-        PaperclipPlugin.Logger.LogDebug($"GetOrderedTypeSettings for {type.Name}");
         List<AssetSetting> list = new List<AssetSetting>();
         foreach (KeyValuePair<ulong, AssetData> asset in ____assets)
         {
@@ -93,33 +86,28 @@ class AssetManagerPatch
         {
             ulong modGUID;
 
-            PaperclipPlugin.Logger.LogDebug($"{setting.GUID} is from mod {Paperclip.GetModGUIDForAsset(setting.GUID)}");
             if (Paperclip.GetModGUIDForAsset(setting.GUID).IsSome(out modGUID))
             {
                 ModMetadata metadata = Paperclip.GetModMetadata(modGUID);
 
                 if (modGUID == ModManager.MainModGUID)
                 {
-                    PaperclipPlugin.Logger.LogDebug($"FIRST - {setting.FilePath}");
                     loadFirst.Add(setting);
                 }
                 else
                 {
                     if (metadata.IsPaperclipMod())
                     {
-                        PaperclipPlugin.Logger.LogDebug($"PAPERCLIP - {setting.FilePath}");
                         loadPaperclipMods.Add(setting);
                     }
                     else
                     {
-                        PaperclipPlugin.Logger.LogDebug($"NORMAL - {setting.FilePath}");
                         loadMods.Add(setting);
                     }
                 }
             }
             else
             {
-                PaperclipPlugin.Logger.LogDebug($"LAST - {setting.FilePath}");
                 loadLast.Add(setting);
             }
         }
@@ -130,7 +118,7 @@ class AssetManagerPatch
                 .Concat(loadLast)
                 .ToList();
 
-        PaperclipPlugin.Logger.LogDebug($"GetOrderedTypeSettings result ->\n{string.Join("\n", loadOrder.Select(v => v.FilePath))}");
+        PaperclipPlugin.Logger.LogDebug($"GetOrderedTypeSettings {type.Name} result ->\n{string.Join("\n", loadOrder.Select(v => v.FilePath))}");
 
         __result = loadOrder;
         return false;

@@ -26,12 +26,8 @@ class SettingsPatch
         if (____settingTypes == null)
         {
             List<Type> settingTypesToAdd = new List<Type>();
-            Assembly[] assemblies = [
-                Assembly.GetAssembly(typeof(SettingBase)),
-                Assembly.GetAssembly(typeof(PaperclipPlugin)),
-            ];
 
-            foreach (Assembly assembly in assemblies)
+            foreach (Assembly assembly in Paperclip.AutoloadAssemblies)
             {
                 foreach (Type type in assembly.GetTypes())
                 {

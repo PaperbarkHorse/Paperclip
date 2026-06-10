@@ -16,12 +16,11 @@ public class PaperclipPlugin : BaseUnityPlugin
     internal static new ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(NAME);
     private static Harmony harmony = new Harmony(GUID);
 
-    public static PaperclipGlobal global = new PaperclipGlobal();
-
     private void Awake()
     {
         harmony.PatchAll(typeof(AssetManagerPatch));
         harmony.PatchAll(typeof(AssetModPatch));
+        harmony.PatchAll(typeof(AssetSettingPatch));
         harmony.PatchAll(typeof(ModManagerPatch));
         harmony.PatchAll(typeof(SettingsPatch));
         harmony.PatchAll(typeof(UIMainMenuPatch));

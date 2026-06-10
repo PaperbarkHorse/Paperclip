@@ -12,6 +12,11 @@ public class Paperclip
 
     public static List<ulong> CurrentAssetLoading = new List<ulong>();
 
+    public static List<Assembly> AutoloadAssemblies = new List<Assembly>([
+        Assembly.GetAssembly(typeof(SettingBase)),
+        Assembly.GetAssembly(typeof(PaperclipPlugin))
+    ]);
+
     public static ModMetadata GetModMetadata(ulong modGUID)
     {
         ModMetadata Metadata;
@@ -60,6 +65,17 @@ public class Paperclip
         {
             return Option<ulong>.None;
         }
+    }
+
+    public static Type GetTypeFromAutoloadAssemblies(string typeName)
+    {
+        foreach (Assembly assembly in Paperclip.AutoloadAssemblies)
+        {
+            Type type = assembly.GetType(typeName);
+            if (type != null) return type;
+        }
+
+        return null;
     }
 
 }

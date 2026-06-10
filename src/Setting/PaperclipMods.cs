@@ -1,5 +1,6 @@
 namespace Setting;
 
+[GenerateSettingAPI]
 public class PaperclipMods : SettingBase
 {
     public PaperclipModSetting[] Mods;
