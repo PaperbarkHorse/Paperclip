@@ -14,9 +14,9 @@ class AssetModPatch
     [HarmonyPostfix]
     private static void WriteMetaFileDataPatch(AssetMod __instance, TextWriter textWriter)
     {
-        if (!Paperclip.HasModMetadata(__instance.GUID)) return;
+        if (!PaperclipCore.HasModMetadata(__instance.GUID)) return;
 
-        ModMetadata metadata = Paperclip.GetModMetadata(__instance.GUID);
+        ModMetadata metadata = PaperclipCore.GetModMetadata(__instance.GUID);
 
         if (metadata.PaperclipVersion > 0)
         {
@@ -32,7 +32,7 @@ class AssetModPatch
     private static void ReadMetaFileLinePatch(AssetMod __instance, string key, string value)
     {
         if (key != null && !key.StartsWith("Paperclip")) return;
-        ModMetadata metadata = Paperclip.GetModMetadata(__instance.GUID);
+        ModMetadata metadata = PaperclipCore.GetModMetadata(__instance.GUID);
 
         switch (key)
         {

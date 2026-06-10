@@ -111,7 +111,7 @@ class ModManagerPatch
                 AssetMod assetMod = modManager.LoadExistingMod(modPath);
                 modManager.SetIsModEnabled(assetMod.GUID, true);
 
-                ModMetadata metadata = Paperclip.GetModMetadata(assetMod.GUID);
+                ModMetadata metadata = PaperclipCore.GetModMetadata(assetMod.GUID);
                 metadata.BundledByScriptMod = true;
 
                 PaperclipPlugin.Logger.LogInfo($" - Loaded {assetMod.ModName} (GUID {assetMod.GUID})");

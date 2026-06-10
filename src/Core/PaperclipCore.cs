@@ -4,8 +4,10 @@ using System.Reflection;
 
 namespace Paperclip;
 
-public class Paperclip
+public class PaperclipCore
 {
+
+    public static readonly int META_VERSION = 1;
 
     public static Dictionary<ulong, ModMetadata> Mods = new Dictionary<ulong, ModMetadata>();
     public static Dictionary<ulong, ulong> AssetsBelongingToMods = new Dictionary<ulong, ulong>();
@@ -69,7 +71,7 @@ public class Paperclip
 
     public static Type GetTypeFromAutoloadAssemblies(string typeName)
     {
-        foreach (Assembly assembly in Paperclip.AutoloadAssemblies)
+        foreach (Assembly assembly in PaperclipCore.AutoloadAssemblies)
         {
             Type type = assembly.GetType(typeName);
             if (type != null) return type;

@@ -27,7 +27,7 @@ class SettingsPatch
         {
             List<Type> settingTypesToAdd = new List<Type>();
 
-            foreach (Assembly assembly in Paperclip.AutoloadAssemblies)
+            foreach (Assembly assembly in PaperclipCore.AutoloadAssemblies)
             {
                 foreach (Type type in assembly.GetTypes())
                 {

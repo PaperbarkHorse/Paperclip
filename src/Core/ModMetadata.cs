@@ -15,4 +15,9 @@ public class ModMetadata
         return PaperclipVersion > 0 || BundledByScriptMod || DependencyGUIDs.Count > 0;
     }
 
+    public void MarkAsPaperclipMod()
+    {
+        PaperclipVersion = PaperclipCore.META_VERSION;
+    }
+
 }

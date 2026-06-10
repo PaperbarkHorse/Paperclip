@@ -14,14 +14,14 @@ class AssetManagerPatch
     [HarmonyPrefix]
     private static void LoadAssetPackagePrePatch(ulong assetGUID)
     {
-        Paperclip.CurrentAssetLoading.Add(assetGUID);
+        PaperclipCore.CurrentAssetLoading.Add(assetGUID);
     }
 
     [HarmonyPatch("LoadAssetPackage")]
     [HarmonyPostfix]
     private static void LoadAssetPackagePostPatch(ulong assetGUID)
     {
-        Paperclip.CurrentAssetLoading.RemoveAt(Paperclip.CurrentAssetLoading.Count - 1);
+        PaperclipCore.CurrentAssetLoading.RemoveAt(PaperclipCore.CurrentAssetLoading.Count - 1);
     }
 
     [HarmonyPatch("RegisterAsset")]
@@ -30,13 +30,13 @@ class AssetManagerPatch
     {
         if (__result == null) return;
 
-        if (Paperclip.CurrentAssetLoading.Count == 0)
+        if (PaperclipCore.CurrentAssetLoading.Count == 0)
         {
             PaperclipPlugin.Logger.LogWarning($"Asset {__result.FilePath} ({__result.GUID}) is not part of a mod that Paperclip knows about");
             return;
         }
 
-        Paperclip.AssetsBelongingToMods[__result.GUID] = Paperclip.CurrentAssetLoading[0];
+        PaperclipCore.AssetsBelongingToMods[__result.GUID] = PaperclipCore.CurrentAssetLoading[0];
     }
 
     [HarmonyPatch("RegisterAssetFromMetaData")]
@@ -45,13 +45,13 @@ class AssetManagerPatch
     {
         if (__result == null) return;
 
-        if (Paperclip.CurrentAssetLoading.Count == 0)
+        if (PaperclipCore.CurrentAssetLoading.Count == 0)
         {
             PaperclipPlugin.Logger.LogWarning($"Asset (from metadata) {__result.FilePath} ({__result.GUID}) is not part of a mod that Paperclip knows about");
             return;
         }
 
-        Paperclip.AssetsBelongingToMods[__result.GUID] = Paperclip.CurrentAssetLoading[0];
+        PaperclipCore.AssetsBelongingToMods[__result.GUID] = PaperclipCore.CurrentAssetLoading[0];
     }
 
     [HarmonyPatch("GetOrderedTypeSettings")]
@@ -86,9 +86,9 @@ class AssetManagerPatch
         {
             ulong modGUID;
 
-            if (Paperclip.GetModGUIDForAsset(setting.GUID).IsSome(out modGUID))
+            if (PaperclipCore.GetModGUIDForAsset(setting.GUID).IsSome(out modGUID))
             {
-                ModMetadata metadata = Paperclip.GetModMetadata(modGUID);
+                ModMetadata metadata = PaperclipCore.GetModMetadata(modGUID);
 
                 if (modGUID == ModManager.MainModGUID)
                 {

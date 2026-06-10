@@ -11,7 +11,7 @@ class UIModsItemPatch
     [HarmonyPostfix]
     private static void InitPatch(UIModsItem __instance, ulong modGUID)
     {
-        if (Paperclip.IsModBundled(modGUID))
+        if (PaperclipCore.IsModBundled(modGUID))
         {
 
             __instance.SubscribedOwnedModIcon.SetActive(false);
@@ -40,7 +40,7 @@ class UIModsItemPatch
     private static void RefreshModNamePatch(UIModsItem __instance, ulong ____modGUID)
     {
         var modGUID = ____modGUID;
-        if (Paperclip.IsModBundled(modGUID))
+        if (PaperclipCore.IsModBundled(modGUID))
         {
             __instance.LabelModType.Key = "Paperclip_UIMods_ModTypeScriptBundled";
             __instance.LabelModType.Refresh();

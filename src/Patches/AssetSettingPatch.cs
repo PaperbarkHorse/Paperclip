@@ -23,7 +23,7 @@ class AssetSettingPatch
                 bool IsSettingType = manifestItem.Operation == ManifestOperation.Object;
                 if (IsSettingType)
                 {
-                    __instance.SettingType = Paperclip.GetTypeFromAutoloadAssemblies(manifestItem.FieldName);
+                    __instance.SettingType = PaperclipCore.GetTypeFromAutoloadAssemblies(manifestItem.FieldName);
 
                     if (__instance.SettingType == null)
                     {
@@ -42,7 +42,7 @@ class AssetSettingPatch
         if (key == "SettingType" && __instance.SettingType == null)
         {
             string typeName = value.Trim();
-            __instance.SettingType = Paperclip.GetTypeFromAutoloadAssemblies(typeName);
+            __instance.SettingType = PaperclipCore.GetTypeFromAutoloadAssemblies(typeName);
 
             if (__instance.SettingType == null)
             {
