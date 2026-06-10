@@ -42,8 +42,6 @@ class UIModsItemPatch
         var modGUID = ____modGUID;
         if (Paperclip.IsModBundled(modGUID))
         {
-            // BUG: Game doesn't read the translation key from the mod properly, this seems to be
-            //      a base game bug that'll need patching :'3
             __instance.LabelModType.Key = "Paperclip_UIMods_ModTypeScriptBundled";
             __instance.LabelModType.Refresh();
         }
